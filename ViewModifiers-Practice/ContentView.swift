@@ -10,12 +10,9 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text("This is a modified text.")
+                .borderedText(borderColor: .black, foregroundColor: .red)
         }
-        .padding()
     }
 }
 
@@ -24,3 +21,30 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+struct BorderedText: ViewModifier {
+    let borderColor: Color
+    let foregroundColor: Color
+   
+    
+    func body(content: Content) -> some View {
+        content
+            .font(.title)
+            .fontWeight(.light)
+            .foregroundColor(foregroundColor)
+            .padding()
+            .background(
+                Capsule()
+                    .stroke(borderColor, lineWidth: 2)
+            )
+        
+    }
+}
+
+extension Text {
+    func borderedText(borderColor: Color, foregroundColor: Color) -> some View {
+        modifier(BorderedText(borderColor: borderColor, foregroundColor: foregroundColor))
+    }
+}
+
+
